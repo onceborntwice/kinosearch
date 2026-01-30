@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KinoSearch — Find Your Movie</title>
+
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      referrerpolicy="no-referrer"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+    <script src="index.js" defer></script>
+  </head>
+
+  <body>
+    <!-- HERO -->
+    <header class="hero">
+      <div class="hero__wallpaper" aria-hidden="true"></div>
+       
+      <div class="hero__content container">
+        <nav class="nav">
+          <a class="brand" href="#">
+            <span class="brand__name">KinoSearch</span>
+          </a>
+
+          <div class="nav__links">
+            <a class="nav__link" href="#">Home</a>
+            <a class="nav__link nav__link--active" href="#">Find your movie</a>
+            <a class="btn btn--pill" href="#">CONTACT</a>
+          </div>
+        </nav>  
+        
+
+        <div class="hero__center">
+          <h1 class="hero__title">Browse our movies</h1>
+
+          <form class="search" action="#" method="get">
+            <input
+              class="search__input"
+              type="text"
+              name="q"
+              placeholder="Search by Keyword"
+              aria-label="Search movies"
+            />
+            <button class="search__btn" type="submit" aria-label="Search">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="main">
+      <div class="container">
+        <div class="movie__layout">
+          <!-- LEFT: Results -->
+          <section class="results">
+            <h2 class="results__title">Search results:</h2>
+            <div class="results__controls">
+              <select class="results__select">
+                <option value="all">All</option>
+                <option value="horror">Horror</option>
+                <option value="action">Action</option>
+                <option value="sci-fi">Sci-Fi</option>
+                <option value="drama">Drama</option>
+                <option value="comedy">Comedy</option>
+              </select>
+
+              <button class="contrast-toggle" type="button" aria-label="Toggle dark mode">
+                <i class="fa-solid fa-circle-half-stroke"></i>
+              </button>
+            </div>
+
+            <div class="grid">
+              <!-- movie 1 -->
+              <article class="movie">
+                  <img
+                    class="movie__img"
+                    alt="Movie poster"
+                  />
+                <div class="movie__body">
+                  <h3 class="movie__title">000000</h3>
+
+                  <ul class="movie__info">
+                    <li class="year">
+                      <i class="fa-solid fa-calendar"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="genre">
+                      <i class="fa-solid fa-clapperboard"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="run-time">
+                      <i class="fa-solid fa-clock"></i>
+                      <span>000000</span>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- movie 2 -->
+              <article class="movie">
+                  <img
+                    class="movie__img"
+                    alt="Movie poster"
+                  />
+                <div class="movie__body">
+                  <h3 class="movie__title">000000</h3>
+
+                  <ul class="movie__info">
+                    <li class="year">
+                      <i class="fa-solid fa-calendar"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="genre">
+                      <i class="fa-solid fa-clapperboard"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="run-time">
+                      <i class="fa-solid fa-clock"></i>
+                      <span>000000</span>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- movie 3 -->
+              <article class="movie">
+                  <img
+                    class="movie__img"
+                    alt="Movie poster"
+                  />
+                <div class="movie__body">
+                  <h3 class="movie__title">000000</h3>
+
+                  <ul class="movie__info">
+                    <li class="year">
+                      <i class="fa-solid fa-calendar"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="genre">
+                      <i class="fa-solid fa-clapperboard"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="run-time">
+                      <i class="fa-solid fa-clock"></i>
+                      <span>000000</span>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- movie 4 -->
+              <article class="movie">
+                  <img
+                    class="movie__img"
+                    alt="Movie poster"
+                  />
+                <div class="movie__body">
+                  <h3 class="movie__title">000000</h3>
+
+                  <ul class="movie__info">
+                    <li class="year">
+                      <i class="fa-solid fa-calendar"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="genre">
+                      <i class="fa-solid fa-clapperboard"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="run-time">
+                      <i class="fa-solid fa-clock"></i>
+                      <span>000000</span>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- movie 5 -->
+              <article class="movie">
+                  <img
+                    class="movie__img"
+                    alt="Movie poster"
+                  />
+                <div class="movie__body">
+                  <h3 class="movie__title">000000</h3>
+
+                  <ul class="movie__info">
+                    <li class="year">
+                      <i class="fa-solid fa-calendar"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="genre">
+                      <i class="fa-solid fa-clapperboard"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="run-time">
+                      <i class="fa-solid fa-clock"></i>
+                      <span>000000</span>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+
+              <!-- movie 6 -->
+              <article class="movie">
+                  <img
+                    class="movie__img"
+                    alt="Movie poster"
+                  />
+                <div class="movie__body">
+                  <h3 class="movie__title">000000</h3>
+
+                  <ul class="movie__info">
+                    <li class="year">
+                      <i class="fa-solid fa-calendar"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="genre">
+                      <i class="fa-solid fa-clapperboard"></i>
+                      <span>000000</span>
+                    </li>
+                    <li class="run-time">
+                      <i class="fa-solid fa-clock"></i>
+                      <span>000000</span>
+                    </li>
+                  </ul>
+                </div>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
