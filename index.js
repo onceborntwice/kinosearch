@@ -2,6 +2,7 @@ const OMDB_KEY = "5865c4f9";
 const OMDB_URL = "https://www.omdbapi.com/";
 
 let contrastToggle = false;
+let seedDetails = [];
 
 const SEED_MOVIES = [
   { title: "Blade Runner 2049", year: "2017" },
@@ -10,6 +11,9 @@ const SEED_MOVIES = [
   { title: "The Blair Witch Project", year: "1999" },
   { title: "Captain America: The Winter Soldier", year: "2014" },
   { title: "The Hangover", year: "2009" },
+  { title: "Inception", year: "2010" },
+  { title: "Eraserhead", year: "1977" },
+  { title: "The Raid 2", year: "2014" },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -34,10 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchForm && searchInput) {
     searchForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      applyKeywordFilter(searchInput.value);
-    });
-    searchInput.addEventListener("input", () => {
-      applyKeywordFilter(searchInput.value);
+      handleSearchSubmit(searchInput.value);
     });
   }
 });
@@ -53,17 +54,37 @@ function toggleContrast() {
 }
 
 async function fetchByTitle(title, year = "") {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 3000);
   const url =
     `${OMDB_URL}?apikey=${OMDB_KEY}` +
     `&t=${encodeURIComponent(title)}` +
     (year ? `&y=${encodeURIComponent(year)}` : "") +
     `&plot=short`;
 
-  const res = await fetch(url);
-  const data = await res.json();
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    const data = await res.json();
 
-  if (data.Response === "False") return null;
-  return data;
+    if (data.Response === "False") return null;
+    return data;
+  } catch (error) {
+    return null;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
+function setStatus(message = "", loading = false) {
+  const resultsSection = document.querySelector(".results");
+  const statusEl = document.querySelector(".results__status");
+  if (!statusEl) return;
+
+  statusEl.textContent = message;
+  statusEl.classList.toggle("results__status--loading", loading);
+  if (resultsSection) {
+    resultsSection.classList.toggle("is-loading", loading);
+  }
 }
 
 function posterOrFallback(poster) {
@@ -85,6 +106,7 @@ async function seedSixCards() {
   const details = await Promise.all(
     SEED_MOVIES.map((m) => fetchByTitle(m.title, m.year))
   );
+  seedDetails = details;
 
   details.forEach((movie, idx) => {
     const card = cards[idx];
@@ -125,6 +147,69 @@ function fillCard(cardEl, movie) {
 
   cardEl.dataset.title = safeText(movie.Title, "");
   cardEl.dataset.genre = safeText(movie.Genre, "");
+}
+
+async function ensureSeedDetails() {
+  if (seedDetails.length === SEED_MOVIES.length) return seedDetails;
+  const details = await Promise.all(
+    SEED_MOVIES.map((m) => fetchByTitle(m.title, m.year))
+  );
+  seedDetails = details;
+  return details;
+}
+
+function hideAllCards() {
+  const cards = document.querySelectorAll(".movie");
+  cards.forEach((card) => {
+    card.style.display = "none";
+  });
+}
+
+function showMovies(movies) {
+  const cards = document.querySelectorAll(".movie");
+  if (cards.length === 0) return;
+
+  cards.forEach((card, idx) => {
+    const movie = movies[idx];
+    if (!movie) {
+      card.style.display = "none";
+      return;
+    }
+    card.style.display = "";
+    fillCard(card, movie);
+  });
+}
+
+async function handleSearchSubmit(value) {
+  const query = (value || "").trim();
+  if (!query) {
+    setStatus("Loading...", true);
+    const details = await ensureSeedDetails();
+    setStatus("", false);
+    const available = details.filter(Boolean);
+    showMovies(available);
+    setStatus(`Showing all ${available.length} saved movies.`);
+    return;
+  }
+
+  setStatus("Loading...", true);
+  const details = await ensureSeedDetails();
+  setStatus("", false);
+
+  const matches = details.filter((movie) => {
+    if (!movie) return false;
+    const title = (movie.Title || "").toLowerCase();
+    return title.includes(query.toLowerCase());
+  });
+
+  if (matches.length === 0) {
+    hideAllCards();
+    setStatus(`No matches in your 9 saved movies for "${query}".`);
+    return;
+  }
+
+  showMovies(matches);
+  setStatus(`Found ${matches.length} match${matches.length === 1 ? "" : "es"}.`);
 }
 
 function applyGenreFilter(value) {
